@@ -16,7 +16,7 @@
 		01970A7F1CD1F5FB00FAB60A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01970A7E1CD1F5FB00FAB60A /* QuartzCore.framework */; };
 		01970A801CD1F61500FAB60A /* MessagingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01970A7A1CD1E23800FAB60A /* MessagingCell.swift */; };
 		01970A8F1CD2240300FAB60A /* man.png in Resources */ = {isa = PBXBuildFile; fileRef = 01970A8B1CD2240300FAB60A /* man.png */; };
-		01970A911CD2240300FAB60A /* woman.png in Resources */ = {isa = PBXBuildFile; fileRef = 01970A8D1CD2240300FAB60A /* woman.png */; };
+		CA8131BC1ECFFD4F00FBD2A8 /* woman.png in Resources */ = {isa = PBXBuildFile; fileRef = CA8131BB1ECFFD4F00FBD2A8 /* woman.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +31,7 @@
 		01970A7C1CD1F5F500FAB60A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		01970A7E1CD1F5FB00FAB60A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		01970A8B1CD2240300FAB60A /* man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = man.png; path = Resources/man.png; sourceTree = "<group>"; };
-		01970A8D1CD2240300FAB60A /* woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = woman.png; path = Resources/woman.png; sourceTree = "<group>"; };
+		CA8131BB1ECFFD4F00FBD2A8 /* woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = woman.png; path = Resources/woman.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +91,8 @@
 		01970A891CD223F600FAB60A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CA8131BB1ECFFD4F00FBD2A8 /* woman.png */,
 				01970A8B1CD2240300FAB60A /* man.png */,
-				01970A8D1CD2240300FAB60A /* woman.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -129,6 +129,7 @@
 				TargetAttributes = {
 					01970A621CD1E1BE00FAB60A = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -156,9 +157,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				01970A711CD1E1BE00FAB60A /* LaunchScreen.storyboard in Resources */,
+				CA8131BC1ECFFD4F00FBD2A8 /* woman.png in Resources */,
 				01970A8F1CD2240300FAB60A /* man.png in Resources */,
 				01970A6E1CD1E1BE00FAB60A /* Assets.xcassets in Resources */,
-				01970A911CD2240300FAB60A /* woman.png in Resources */,
 				01970A6C1CD1E1BE00FAB60A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,6 +291,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.scriptlanes.test.ChatView-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -302,6 +304,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.scriptlanes.test.ChatView-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

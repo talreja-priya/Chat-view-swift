@@ -27,7 +27,7 @@ import UIKit
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -36,7 +36,7 @@ import UIKit
 
     
     class func maxTextWidth() -> CGFloat {
-        if UI_USER_INTERFACE_IDIOM() == .Phone {
+        if UI_USER_INTERFACE_IDIOM() == .phone {
             return 220.0
         }
         else {
@@ -44,17 +44,17 @@ import UIKit
         }
     }
     
-    class func imageWithColor(color: UIColor) -> UIImage {
-        let rect: CGRect = CGRectMake(0, 0, 1, 1)
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(1, 1), false, 0)
+    class func imageWithColor(_ color: UIColor) -> UIImage {
+        let rect: CGRect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0)
         color.setFill()
         UIRectFill(rect)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return image
     }
     
-    class func balloonImage(sent: Bool) -> UIImage {
+    class func balloonImage(_ sent: Bool) -> UIImage {
         if sent == true {
             return MessagingCell.imageWithColor(UIColor(red: 200/255, green: 230/255, blue: 201/255, alpha: 1.0));
             
@@ -68,21 +68,21 @@ import UIKit
    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?)  {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.selectionStyle = .None
+        self.selectionStyle = .none
         
-        self.msgView = UIView(frame: CGRectZero)
-        self.msgView.autoresizingMask = .FlexibleHeight
-        self.msgBalView = UIImageView(frame: CGRectZero)
-        self.messageText = UILabel(frame: CGRectZero)
-        self.messageTime = UILabel(frame: CGRectZero)
+        self.msgView = UIView(frame: CGRect.zero)
+        self.msgView.autoresizingMask = .flexibleHeight
+        self.msgBalView = UIImageView(frame: CGRect.zero)
+        self.messageText = UILabel(frame: CGRect.zero)
+        self.messageTime = UILabel(frame: CGRect.zero)
         self.profileImage = UIImageView(image: nil)
-        self.messageText.backgroundColor = UIColor.clearColor()
-        self.messageText.font = UIFont.systemFontOfSize(messageTextSize)
-        self.messageText.lineBreakMode = .ByWordWrapping
+        self.messageText.backgroundColor = UIColor.clear
+        self.messageText.font = UIFont.systemFont(ofSize: messageTextSize)
+        self.messageText.lineBreakMode = .byWordWrapping
         self.messageText.numberOfLines = 0
-        self.messageTime.font = UIFont.boldSystemFontOfSize(10.0)
-        self.messageTime.textColor = UIColor.darkGrayColor()
-        self.messageTime.backgroundColor = UIColor.clearColor()
+        self.messageTime.font = UIFont.boldSystemFont(ofSize: 10.0)
+        self.messageTime.textColor = UIColor.darkGray
+        self.messageTime.backgroundColor = UIColor.clear
         self.msgView.addSubview(self.msgBalView)
         self.msgView.addSubview(self.messageText)
         self.contentView .addSubview(self.messageTime)
@@ -103,41 +103,41 @@ import UIKit
     func floatHorizontal () -> CGFloat  {
         return textMarginHorizontal
     }
-    func messageSize1(message: NSString) -> CGSize {
+    func messageSize1(_ message: NSString) -> CGSize {
         
-        let a=message.boundingRectWithSize(CGSizeMake(MessagingCell.maxTextWidth(), CGFloat.max), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName :messageText.font], context: nil)
+        let a=message.boundingRect(with: CGSize(width: MessagingCell.maxTextWidth(), height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName :messageText.font], context: nil)
 
         return a.size
     }
     override func layoutSubviews() {
-        let textSize: CGSize = self.messageSize1(messageText.text!)
+        let textSize: CGSize = self.messageSize1(messageText.text! as NSString)
         
         
-        let b=messageTime.text!._bridgeToObjectiveC().boundingRectWithSize(messageTime.frame.size, options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName :messageTime.font], context: nil)
+        let b=messageTime.text!._bridgeToObjectiveC().boundingRect(with: messageTime.frame.size, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName :messageTime.font], context: nil)
         let timeSize: CGSize = b.size
         
-        var msgBalViewFrame: CGRect = CGRectZero
-        var messageTextFrame: CGRect = CGRectZero
-        var messageTimeFrame: CGRect = CGRectZero
-        var profileImageFrame: CGRect = CGRectZero
+        var msgBalViewFrame: CGRect = CGRect.zero
+        var messageTextFrame: CGRect = CGRect.zero
+        var messageTimeFrame: CGRect = CGRect.zero
+        var profileImageFrame: CGRect = CGRect.zero
         
         
         if sentBy == true {
-            messageTimeFrame = CGRectMake(self.frame.width-timeSize.width-textMarginHorizontal-39,0.0, timeSize.width, timeSize.height);
+            messageTimeFrame = CGRect(x: self.frame.width-timeSize.width-textMarginHorizontal-39,y: 0.0, width: timeSize.width, height: timeSize.height);
 
-             msgBalViewFrame = CGRectMake(self.frame.size.width - 35 - (textSize.width + 2 * textMarginHorizontal), messageTimeFrame.size.height+2, textSize.width+2*textMarginHorizontal, textSize.height + 2 * textMarginVertical)
-            messageTextFrame = CGRectMake(self.frame.size.width - 32 - (textSize.width + textMarginHorizontal), msgBalViewFrame.origin.y + textMarginVertical,textSize.width, textSize.height)
-            profileImageFrame = CGRectMake(self.frame.size.width - 34, messageTimeFrame.size.height+msgBalViewFrame.height/2-timeSize.height, 32.0, 32.0)
+             msgBalViewFrame = CGRect(x: self.frame.size.width - 35 - (textSize.width + 2 * textMarginHorizontal), y: messageTimeFrame.size.height+2, width: textSize.width+2*textMarginHorizontal, height: textSize.height + 2 * textMarginVertical)
+            messageTextFrame = CGRect(x: self.frame.size.width - 32 - (textSize.width + textMarginHorizontal), y: msgBalViewFrame.origin.y + textMarginVertical,width: textSize.width, height: textSize.height)
+            profileImageFrame = CGRect(x: self.frame.size.width - 34, y: messageTimeFrame.size.height+msgBalViewFrame.height/2-timeSize.height, width: 32.0, height: 32.0)
             
             
         }
         else
         {
-            messageTimeFrame = CGRectMake(textMarginHorizontal + 30, 0.0, timeSize.width, timeSize.height)
-            msgBalViewFrame = CGRectMake(0.0 + 35, messageTimeFrame.size.height+2, textSize.width + 2 * self.textMarginHorizontal, textSize.height + 2 * self.textMarginVertical)
-            messageTextFrame = CGRectMake(textMarginHorizontal + 32, msgBalViewFrame.origin.y + self.textMarginVertical, textSize.width, textSize.height)
+            messageTimeFrame = CGRect(x: textMarginHorizontal + 30, y: 0.0, width: timeSize.width, height: timeSize.height)
+            msgBalViewFrame = CGRect(x: 0.0 + 35, y: messageTimeFrame.size.height+2, width: textSize.width + 2 * self.textMarginHorizontal, height: textSize.height + 2 * self.textMarginVertical)
+            messageTextFrame = CGRect(x: textMarginHorizontal + 32, y: msgBalViewFrame.origin.y + self.textMarginVertical, width: textSize.width, height: textSize.height)
             
-            profileImageFrame = CGRectMake(4, messageTimeFrame.size.height+msgBalViewFrame.height/2-timeSize.height, 32.0, 32.0)
+            profileImageFrame = CGRect(x: 4, y: messageTimeFrame.size.height+msgBalViewFrame.height/2-timeSize.height, width: 32.0, height: 32.0)
         }
         
         self.msgBalView.image = MessagingCell.balloonImage(sentBy)

@@ -22,7 +22,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         messages=["Hi","Hello","How r yu","Fine","Good"]
 
         
-        let bounds: CGRect = UIScreen.mainScreen().bounds
+        let bounds: CGRect = UIScreen.main.bounds
         let height:CGFloat = bounds.size.height
         tableHeight.constant = height - (65+43)
         self.tableView.updateConstraintsIfNeeded()
@@ -38,21 +38,21 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier: String = "messaging"
     
-       let cell = MessagingCell.init(style: .Default, reuseIdentifier: cellIdentifier)
+       let cell = MessagingCell.init(style: .default, reuseIdentifier: cellIdentifier)
         
         self.configureCell(cell, atIndexPath: indexPath)
         return cell
     }
     
     
-    func configureCell(cell: AnyObject, atIndexPath indexPath: NSIndexPath) {
+    func configureCell(_ cell: AnyObject, atIndexPath indexPath: IndexPath) {
         let ccell: MessagingCell = (cell as! MessagingCell)
         if indexPath.row % 2 == 0 {
             ccell.sentBy = true
@@ -64,13 +64,13 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         }
         ccell.messageText.text = messages[indexPath.row]
         
-        ccell.messageTime.text = self.formatDate(NSDate())
+        ccell.messageTime.text = self.formatDate(Date())
        
         
     }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let ccell: MessagingCell = MessagingCell()
-        messagesize = ccell.messageSize1(messages[indexPath.row])
+        messagesize = ccell.messageSize1(messages[indexPath.row] as NSString)
         return messagesize.height + 2 * ccell.floatVertical() + 40.0
  
         
@@ -78,15 +78,15 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     
     
     
-    func formatDate(date: NSDate) -> String {
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .ShortStyle
+    func formatDate(_ date: Date) -> String {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
         dateFormatter.dateFormat = "dd' 'MMM' 'yyyy"
-        let formattedDate: String = dateFormatter.stringFromDate(date)
+        let formattedDate: String = dateFormatter.string(from: date)
         return formattedDate
     }
 
-    @IBAction func sendClicked(sender: AnyObject) {
+    @IBAction func sendClicked(_ sender: AnyObject) {
         messages.append(self.msgTxt.text!)
         self.tableView.reloadData()
         self.msgTxt.text=""
@@ -96,40 +96,40 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     }
     
     func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWasShown(_:)), name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillBeHidden(_:)), name: UIKeyboardDidHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
     
-    func keyboardWasShown(aNotification: NSNotification) {
-        var info: [NSObject : AnyObject] = aNotification.userInfo!
+    func keyboardWasShown(_ aNotification: Notification) {
+        var info: [AnyHashable: Any] = aNotification.userInfo!
 
-        let kbSize = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let kbSize = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0)
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets
         var aRect: CGRect = self.view.frame
-        aRect.size.height -= kbSize.height
-        if !CGRectContainsPoint(aRect, self.msgTxt.frame.origin) {
+        aRect.size.height -= kbSize.height;
+        if !aRect.contains(self.msgTxt.frame.origin) {
             self.scrollView.scrollRectToVisible(self.msgTxt.frame, animated: true)
         }
     
     }
-    func keyboardWillBeHidden(aNotification: NSNotification) {
-        let contentInsets: UIEdgeInsets = UIEdgeInsetsZero
+    func keyboardWillBeHidden(_ aNotification: Notification) {
+        let contentInsets: UIEdgeInsets = UIEdgeInsets.zero
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets
     }
     
     
     //TextField Delegate Method
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }
     
     
     //Scroll Tableview to Bottom
     func scrollToBottom() {
-        self.tableView.scrollRectToVisible(CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height), animated: true)
+        self.tableView.scrollRectToVisible(CGRect(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.size.height, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height), animated: true)
     }
    
 }
